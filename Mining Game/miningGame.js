@@ -18,8 +18,26 @@ function give()
 
 function save()
 {
-    //save function isnt working
-    document.cookie = "database=" + Database; // not working
+    localStorage.setItem('database', JSON.stringify(Database));
+}
+
+function load()
+{
+    if (localStorage.getItem('database')) 
+    {
+        const savedData = localStorage.getItem('database');
+        console.log(savedData);
+        if(savedData)
+        {
+            Database = JSON.parse(savedData);
+        }
+        updateDisplay();
+    }
+    else
+    {
+        console.log("LocalStorage is not supported.");
+    }
+
 }
 
 function buyDiamondsMine()
@@ -119,6 +137,11 @@ function checkButtons()
     else
     {
         openDiamondMineButton.style.visibility = "hidden";
+    }
+
+    if(Database["diamondsMine"] == 1)
+    {
+        diamondsMineTitle.style.visibility = "visible";
     }
 }
 
