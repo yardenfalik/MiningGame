@@ -29,36 +29,35 @@
           |   |  |   _   ||   |___   | ||_|| ||   | | | |   ||   |___ |   |  | |  |   |_| ||   _   || ||_|| ||   |___ 
           |___|  |__| |__||_______|  |_|   |_||___| |_|  |__||_______||___|  |_|  |_______||__| |__||_|   |_||_______|
     </pre>
+    <div id="mainSection" style="position: relative;">
+        <h1>🟡Gold: <span id="goldSpan">0</span></h1>
+        <h1 id="diamondsMineTitle" style="visibility: hidden;">💎Diamonds: <span id="diamondSpan">0</span></h1>
+        <br>
+        <button onclick="mine()" class="miningTool">⛏️</button>
 
-    <h1>🟡Gold: <span id="goldSpan">0</span></h1>
-    <h1 id="diamondsMineTitle" style="visibility: hidden;">💎Diamonds: <span id="diamondSpan">0</span></h1>
-    <br>
-    <button onclick="mine()" class="miningTool">⛏️</button>
-    <br>
-    <br>
-    <button id="upgradeToolButton" style="visibility: hidden;" onclick="upgradeTool()">Upgrade your mining Tool (30 gold)</button>
-    <br>
-    <br>
-    <button id="automaticMinerButton" style="visibility: hidden;" onclick="buyAutomaticMiner()">Buy an automatic miner (100 gold)</button>
-    <br>
-    <br>
-    <button id="upgradeAutomaticMinerButton" style="visibility: hidden;" onclick="upgradeAutomaticMiner()">Upgrade your automatic miner (200 gold)</button>
-    <br>
-    <br>
-    <button id="openDiamondMineButton" style="visibility: hidden;" onclick="buyDiamondsMine()">Open the Diamonds Mine (10,000 gold)</button>
-
-
-    <p id="automaticMinerCounterTitle"></p>
-
-    <pre id="manual">
-    -----
-    | M |
-    | U |
-    -----
-    </pre>
+        <button id="upgradeToolButton" style="display: none;" onclick="upgradeTool()">Upgrade your mining Tool (30 gold)</button>
+        <br>
+        <button id="buyManualButton" style="display: none;" onclick="buyManual()">Buy a manual (5 gold)</button>
+        <br>
+        <button id="automaticMinerButton" style="display: none;" onclick="buyAutomaticMiner()">Buy an automatic miner (100 gold)</button>
+        <br>
+        <button id="upgradeAutomaticMinerButton" style="display: none;" onclick="upgradeAutomaticMiner()">Upgrade your automatic miner (200 gold)</button>
+        <br>
+        <button id="openDiamondMineButton" style="display: none;" onclick="buyDiamondsMine()">Open the Diamonds Mine (10,000 gold)</button>
+        
+        <p id="miningToolLevelDisplay">Your mining tool level is 1</p>
+        <p id="automaticMinerCounterTitle"></p>
+        
+        <pre id="manual" onclick="manual()" style="display: none;">
+        -----
+        | M |
+        | U |
+        -----
+        </pre>
+    </div>
 
     <div id="manualDescription" style="display: none;">
-        <h1>Manual</h1>
+        <h1><button onclick="manual()" style="font-size: 60%;">🏡</button> Manual</h1>
         <ul>
             <li>Mining Tool - start with 1 gold per click, you can upgrade it by one with 30 golds.</li>
             <li>Automatic Miner - costs 100 gold and produces you 1 gold every 10 seconds.</li>
@@ -70,6 +69,7 @@
         <button onclick="save()">Save Game</button>
         <button onclick="load()">Load Saved Game</button>
         <br>
+        <p>If you want to play offline you should be able to with this <a href="?slot=1">link</a> (if you have a save game of course)</p>
         <br>
     </div>
 
@@ -77,22 +77,20 @@
     <p>Made By <a href="https://yardenfalik.github.io/">Yarden Falik</a> | <a href="https://github.com/yardenfalik/MiningGame">Source Code</a></p>
 
     <script>
-        function colors()
-        {
-            var bodyComp = document.body;
-            bodyComp.classList.toggle("dark-mode");
-        }
-
-        manual.onclick = function() 
+       function manual()
         {
             var x = document.getElementById("manualDescription");
+            var mainSection = document.getElementById("mainSection");
+
             if (x.style.display === "none") 
             {
                 x.style.display = "block";
+                mainSection.style.display = "none";
             } 
             else 
             {
                 x.style.display = "none";
+                mainSection.style.display = "block";
             }
         } 
     </script>

@@ -1,5 +1,9 @@
 //--------------------
-var Database = {"gold" : 0, "miningToolLevel" : 0, "minerIsActive" : 0, "minerInterval" : 10000, "goldPerInterval" : 1, "diamondsMine" : 0};
+var Database = {"gold" : 0, "diamond" : 0, "miningToolLevel" : 0, "minerIsActive" : 0, "minerInterval" : 10000, "goldPerInterval" : 1, "diamondsMine" : 0, "manualIsActive" : 0, "darkMode" : 0};
+//--------------------
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const slot = urlParams.get('slot')
 //--------------------
 var goldSpan = document.getElementById("goldSpan");
 var upgradeToolButton = document.getElementById("upgradeToolButton");
@@ -8,12 +12,51 @@ var upgradeAutomaticMinerButton = document.getElementById("upgradeAutomaticMiner
 var automaticMinerCounterTitle = document.getElementById("automaticMinerCounterTitle");
 var openDiamondMineButton = document.getElementById("openDiamondMineButton");
 var diamondsMineTitle = document.getElementById("diamondsMineTitle");
+var miningToolLevelDisplay = document.getElementById("miningToolLevelDisplay");
+var buyManualButton = document.getElementById("buyManualButton");
+var manualButton = document.getElementById("manual");
 
 //temoprerly
 function give()
 {
     Database["gold"] += 200;
     updateDisplay();
+}
+
+function startGame()
+{
+    if(slot == 1)
+    {
+        if (localStorage.getItem('database')) 
+        {
+            const savedData = localStorage.getItem('database');
+            if(savedData)
+            {
+                Database = JSON.parse(savedData);
+            }
+            updateDisplay();
+        }
+    }
+
+    if(Database["darkMode"] == 1)
+    {
+        colors();
+        Database["darkMode"] == 1;
+    }
+}
+
+function colors()
+{
+    var bodyComp = document.body;
+    bodyComp.classList.toggle("dark-mode");
+    if(Database["darkMode"] == 1)
+    {
+        Database["darkMode"] = 0;
+    }
+    else
+    {
+        Database["darkMode"] = 1;
+    }
 }
 
 function save()
@@ -26,7 +69,6 @@ function load()
     if (localStorage.getItem('database')) 
     {
         const savedData = localStorage.getItem('database');
-        console.log(savedData);
         if(savedData)
         {
             Database = JSON.parse(savedData);
@@ -89,6 +131,13 @@ function buyAutomaticMiner()
     updateDisplay();
 }
 
+function buyManual()
+{
+    Database["manualIsActive"] = 1;
+    Database["gold"] -= 5;
+    updateDisplay();
+}
+
 function mine()
 {
     Database["gold"] += Database["miningToolLevel"] + 1;
@@ -97,55 +146,64 @@ function mine()
 
 function checkButtons()
 {
-    if(Database["gold"] >= 30 && Database["miningToolLevel"] <= 5)
+    if(Database["gold"] >= 30 && Database["miningToolLevel"] < 4)
     {
-        upgradeToolButton.style.visibility = "visible";
+        upgradeToolButton.style.display = "block";
     }
     else
     {
-        upgradeToolButton.style.visibility = "hidden";
+        upgradeToolButton.style.display = "none";
     }
 
     if(Database["gold"] >= 100 && Database["minerIsActive"] == 0)
     {
-        automaticMinerButton.style.visibility = "visible";
+        automaticMinerButton.style.display = "block";
     }
     else
     {
-        automaticMinerButton.style.visibility = "hidden";
+        automaticMinerButton.style.display = "none";
     }
 
     if((Database["minerInterval"] > 1000 && Database["gold"] >= 200) && Database["minerIsActive"] == 1)
     {
-        upgradeAutomaticMinerButton.style.visibility = "visible";
+        upgradeAutomaticMinerButton.style.display = "block";
         upgradeAutomaticMinerButton.innerText = "Upgrade your automatic miner (it will mine 1 second faster) (200 gold)";
     }
     else if((Database["minerInterval"] == 1000 && Database["gold"] >= Database["goldPerInterval"] * 200) && Database["minerIsActive"] == 1)
     {
-        upgradeAutomaticMinerButton.style.visibility = "visible";
+        upgradeAutomaticMinerButton.style.display = "block";
         upgradeAutomaticMinerButton.innerText = "Upgrade your automatic miner (it will mine 1 more per second) (" + Database["goldPerInterval"] * 200 + " gold)";
     }
     else
     {
-        upgradeAutomaticMinerButton.style.visibility = "hidden";
+        upgradeAutomaticMinerButton.style.display = "none";
     }
     
     if(Database["goldPerInterval"] >= 5 && Database["diamondsMine"] == 0)
     {
-        openDiamondMineButton.style.visibility = "visible";
+        openDiamondMineButton.style.display = "block";
     }
     else
     {
-        openDiamondMineButton.style.visibility = "hidden";
+        openDiamondMineButton.style.display = "none";
     }
 
     if(Database["diamondsMine"] == 1)
     {
         diamondsMineTitle.style.visibility = "visible";
     }
+
+    if(Database["manualIsActive"] == 0 && Database["gold"] >= 5)
+    {
+        buyManualButton.style.display = "block";
+    }
+    else
+    {
+        buyManualButton.style.display = "none";
+    }
 }
 
-function updateDisplay() 
+function updateDisplay()
 {
     checkButtons();
     goldSpan.innerText = Database["gold"];
@@ -154,4 +212,13 @@ function updateDisplay()
     {
         automaticMinerCounterTitle.innerText = "Your automatic miner speed is currently "+ Database["goldPerInterval"] +" gold every "+ Database["minerInterval"] / 1000 +" seconds";
     }
+
+    miningToolLevelDisplay.innerText = "Your mining tool level is " + (Database["miningToolLevel"] + 1);
+
+    if(Database["manualIsActive"] == 1)
+    {
+        manualButton.style.display = "block";
+    }
 }
+
+startGame();
