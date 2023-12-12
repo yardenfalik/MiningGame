@@ -1,0 +1,2 @@
+# MiningGame
+a clicker game
