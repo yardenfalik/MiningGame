@@ -5,31 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <style>
-        .miningTool
-        {
-            font-size: 500%;
-        }
-
-        .dark-mode 
-        {
-            background-color: black;
-            color: white;
-        }
-    </style>
-
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <pre>
-         _______  __   __  _______    __   __  ___   __    _  _______  ______      _______  _______  __   __  _______ 
-        |       ||  | |  ||       |  |  |_|  ||   | |  |  | ||       ||    _ |    |       ||   _   ||  |_|  ||       |
-        |_     _||  |_|  ||    ___|  |       ||   | |   |_| ||    ___||   | ||    |    ___||  |_|  ||       ||    ___|
-          |   |  |       ||   |___   |       ||   | |       ||   |___ |   |_||_   |   | __ |       ||       ||   |___ 
-          |   |  |       ||    ___|  |       ||   | |  _    ||    ___||    __  |  |   ||  ||       ||       ||    ___|
-          |   |  |   _   ||   |___   | ||_|| ||   | | | |   ||   |___ |   |  | |  |   |_| ||   _   || ||_|| ||   |___ 
-          |___|  |__| |__||_______|  |_|   |_||___| |_|  |__||_______||___|  |_|  |_______||__| |__||_|   |_||_______|
-    </pre>
-    <div id="mainSection" style="position: relative;">
+        <pre>
+            <iframe src="/ascii/Title.txt" width="1000px" frameBorder="0"></iframe>
+        </pre>
+
+            <div id="mainSection" style="position: relative;">
         <h1>🟡Gold: <span id="goldSpan">0</span></h1>
         <h1 id="diamondsMineTitle" style="visibility: hidden;">💎Diamonds: <span id="diamondSpan">0</span></h1>
         <br>
@@ -74,6 +57,7 @@
     </div>
 
     <button onclick="give()">give 200 gold</button>
+    <a href="mine.html">Mine</a>
     <p>Made By <a href="https://github.com/OmerFarber11">Omer Farber</a>, <a href="https://yardenfalik.github.io/">Yarden Falik</a> | <a href="https://github.com/yardenfalik/MiningGame">Source Code</a></p>
     <script>
        function manual()
